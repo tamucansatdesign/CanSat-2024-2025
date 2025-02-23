@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     Graph.cpp \
+    frame_parser.cpp \
     main.cpp \
     cansat_gui.cpp \
     libs/qcustomplot.cpp
@@ -17,6 +18,7 @@ SOURCES += \
 HEADERS += \
     Graph.h \
     cansat_gui.h \
+    frame_parser.h \
     libs/qcustomplot.h
 
 FORMS += \
