@@ -13,6 +13,7 @@ Cansat_GUI::Cansat_GUI(QWidget *parent)
     graphWidgets[0]->setGraphName(1,"GPS");
     graphWidgets[0]->setGraphColor(1, QColorConstants::Red);
     graphWidgets[0]->setRandomData(0);
+    //graphWidgets[0]->addPoint(0, parser->GetPresAltitude(), parser->GetMissionTime());
     graphWidgets[0]->setRandomData(1);
 
     //Temperature Graph
