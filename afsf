@@ -1,0 +1,22 @@
+[33m2a13fe3[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/gcsbackend[m[33m)[m HEAD@{0}: checkout: moving from b784d1e9237c3b36d46d57d911f0c04ffeaa9cb0 to origin/gcsbackend
+[33mb784d1e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{1}: checkout: moving from 0f467538b19338e64e6455119268f4be12995fce to b784d1e
+[33m0f46753[m[33m ([m[1;32mfsw_changes[m[33m)[m HEAD@{2}: checkout: moving from fsw_changes to 0f46753
+[33m0f46753[m[33m ([m[1;32mfsw_changes[m[33m)[m HEAD@{3}: checkout: moving from main to fsw_changes
+[33mb784d1e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{4}: checkout: moving from fsw_changes to main
+[33m0f46753[m[33m ([m[1;32mfsw_changes[m[33m)[m HEAD@{5}: checkout: moving from main to fsw_changes
+[33mb784d1e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{6}: checkout: moving from b784d1e9237c3b36d46d57d911f0c04ffeaa9cb0 to main
+[33mb784d1e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{7}: checkout: moving from 2a13fe36355497e55c6f5542638c57f3e62e0192 to origin/main
+[33m2a13fe3[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/gcsbackend[m[33m)[m HEAD@{8}: checkout: moving from 6b74b7256673dd89417576399196bf0456b436cb to origin/gcsbackend
+[33m6b74b72[m HEAD@{9}: commit: fsw changes and gcs changes
+[33m2a13fe3[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/gcsbackend[m[33m)[m HEAD@{10}: checkout: moving from fsw_changes to origin/gcsbackend
+[33m0f46753[m[33m ([m[1;32mfsw_changes[m[33m)[m HEAD@{11}: checkout: moving from 0f467538b19338e64e6455119268f4be12995fce to fsw_changes
+[33m0f46753[m[33m ([m[1;32mfsw_changes[m[33m)[m HEAD@{12}: commit: setup serial comm potential
+[33mdddf281[m HEAD@{13}: checkout: moving from b784d1e9237c3b36d46d57d911f0c04ffeaa9cb0 to origin/gcsbackend
+[33mb784d1e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{14}: checkout: moving from dddf28108d8818edc2f7fea69bbd94a4db6bbbc4 to origin/main
+[33mdddf281[m HEAD@{15}: checkout: moving from main to origin/gcsbackend
+[33mb784d1e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{16}: commit: fixing file mistakes
+[33mb91e63c[m HEAD@{17}: pull: Fast-forward
+[33m6a8096a[m HEAD@{18}: commit: fixed things
+[33m1501e49[m HEAD@{19}: commit: Added git ignore
+[33m098c3a7[m HEAD@{20}: commit: Added previous years FSW
+[33mb4d1a8e[m[33m ([m[1;31morigin/master[m[33m)[m HEAD@{21}: clone: from https://github.com/tamucansatdesign/CanSat-2024-2025.git
