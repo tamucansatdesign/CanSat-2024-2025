@@ -39,7 +39,35 @@ struct qt_meta_tag_ZN10Cansat_GUIE_t {};
 
 #ifdef QT_MOC_HAS_STRINGDATA
 static constexpr auto qt_meta_stringdata_ZN10Cansat_GUIE = QtMocHelpers::stringData(
-    "Cansat_GUI"
+    "Cansat_GUI",
+    "updateGraphs",
+    "",
+    "string",
+    "ID",
+    "time",
+    "packet_count",
+    "mode",
+    "state",
+    "altitude",
+    "temperature",
+    "pressure",
+    "voltage",
+    "gyro_r",
+    "gyro_p",
+    "gyro_y",
+    "accel_r",
+    "accel_p",
+    "accel_y",
+    "mag_r",
+    "mag_p",
+    "mag_y",
+    "auto_gyro_rotation_rate",
+    "gps_time",
+    "gps_altitude",
+    "gps_latitude",
+    "gps_longitude",
+    "gps_stats",
+    "cmd_echo"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -51,12 +79,18 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10Cansat_GUIE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       1,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
+
+ // slots: name, argc, parameters, tag, flags, initial metatype offsets
+       1,   25,   20,    2, 0x08,    1 /* Private */,
+
+ // slots: parameters
+    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3, QMetaType::Double, 0x80000000 | 3, 0x80000000 | 3, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, 0x80000000 | 3, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Int, 0x80000000 | 3,    4,    5,    6,    7,    8,    9,   10,   11,   12,   13,   14,   15,   16,   17,   18,   19,   20,   21,   22,   23,   24,   25,   26,   27,   28,
 
        0        // eod
 };
@@ -69,7 +103,34 @@ Q_CONSTINIT const QMetaObject Cansat_GUI::staticMetaObject = { {
     nullptr,
     qt_incomplete_metaTypeArray<qt_meta_tag_ZN10Cansat_GUIE_t,
         // Q_OBJECT / Q_GADGET
-        QtPrivate::TypeAndForceComplete<Cansat_GUI, std::true_type>
+        QtPrivate::TypeAndForceComplete<Cansat_GUI, std::true_type>,
+        // method 'updateGraphs'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<string, std::false_type>,
+        QtPrivate::TypeAndForceComplete<string, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<string, std::false_type>,
+        QtPrivate::TypeAndForceComplete<string, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<string, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        QtPrivate::TypeAndForceComplete<string, std::false_type>
     >,
     nullptr
 } };
@@ -77,10 +138,12 @@ Q_CONSTINIT const QMetaObject Cansat_GUI::staticMetaObject = { {
 void Cansat_GUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     auto *_t = static_cast<Cansat_GUI *>(_o);
-    (void)_t;
-    (void)_c;
-    (void)_id;
-    (void)_a;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: _t->updateGraphs((*reinterpret_cast< std::add_pointer_t<string>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<string>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<string>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<string>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[8])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[9])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[10])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[11])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[12])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[13])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[14])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[15])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[16])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[17])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[18])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[19])),(*reinterpret_cast< std::add_pointer_t<string>>(_a[20])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[21])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[22])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[23])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[24])),(*reinterpret_cast< std::add_pointer_t<string>>(_a[25]))); break;
+        default: ;
+        }
+    }
 }
 
 const QMetaObject *Cansat_GUI::metaObject() const
@@ -99,6 +162,18 @@ void *Cansat_GUI::qt_metacast(const char *_clname)
 int Cansat_GUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QMainWindow::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 1)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 1;
+    }
+    if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 1)
+            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
+        _id -= 1;
+    }
     return _id;
 }
 QT_WARNING_POP
