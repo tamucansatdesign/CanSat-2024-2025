@@ -9,22 +9,22 @@
 
 
 // struct Frame {
-//     std::string ID;
-//     double mission_time;
-//     double packet_count;
-//     std::string mode;
-//     std::string state;
-//     double altitude;
-//     double temperature;
-//     double pressure;
-//     double voltage;
-//     double gyro_r;
-//     double gyro_p;
-//     double gyro_y;
-//     double accel_r;
-//     double accel_p;
-//     double accel_y;
-//     double mag_r;
+//     QString ID;
+//     float mission_time;
+//     float packet_count;
+//     QString mode;
+//     QString state;
+//     float altitude;
+//     float temperature;
+//     float pressure;
+//     float voltage;
+//     float gyro_r;
+//     float gyro_p;
+//     float gyro_y;
+//     float accel_r;
+//     float accel_p;
+//     float accel_y;
+//     float mag_r;
 // };
 
 class FrameParser : public QObject
@@ -36,13 +36,13 @@ public:
     void startSerialCommunication(const QString &portName, int baudRate);
 
 signals:
-    void newDataParsed(string ID, string time, double packet_count,
-                       string mode, string state, double altitude, double temperature, double pressure, double voltage,
-                       double gyro_r, double gyro_p, double gyro_y,
-                       double accel_r, double accel_p, double accel_y, double mag_r,
-                       double mag_p, double mag_y, double auto_gyro_rotation_rate,
-                       string gps_time, double gps_altitude, double gps_latitude,
-                       double gps_longitude, int gps_stats, string cmd_echo);
+    void newDataParsed(int ID, QString time, int packet_count,
+                       QString mode, QString state, float altitude, float temperature, float pressure, float voltage,
+                       float gyro_r, float gyro_p, float gyro_y,
+                       float accel_r, float accel_p, float accel_y, float mag_r,
+                       float mag_p, float mag_y, float auto_gyro_rotation_rate,
+                       QString gps_time, float gps_altitude, float gps_latitude,
+                       float gps_longitude, int gps_sats, QString cmd_echo);
 
 private slots:
     void readSerialData();  // Slot to handle incoming serial data
@@ -53,29 +53,4 @@ private:
 
 #endif // FRAME_PARSER_H
 
-/*
-class serial_parser
-{
-public:
-    serial_parser(const std::string& CSV);
-    splitCSV(const std::string& CSV);
 
-
-signals:
-
-
-private slots:
-
-
-private:
-    QSerialPort *serial;
-
-
-
-
-
-
-};
-
-#endif // SERIAL_PARSER_H
-*/

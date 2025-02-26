@@ -20,28 +20,29 @@ public:
     ~Cansat_GUI();
 
 private slots:
-    void updateGraphs(string ID, string time, double packet_count,
-                      string mode, string state, double altitude, double temperature, double pressure, double voltage,
-                      double gyro_r, double gyro_p, double gyro_y,
-                      double accel_r, double accel_p, double accel_y, double mag_r,
-                      double mag_p, double mag_y, double auto_gyro_rotation_rate,
-                      string gps_time, double gps_altitude, double gps_latitude,
-                      double gps_longitude, int gps_stats, string cmd_echo);
+    void updateGUI(int ID, float time, float packet_count,
+                      QString mode, QString state, float altitude, float temperature, float pressure, float voltage,
+                      float gyro_r, float gyro_p, float gyro_y,
+                      float accel_r, float accel_p, float accel_y, float mag_r,
+                      float mag_p, float mag_y, float auto_gyro_rotation_rate,
+                      float gps_time, float gps_altitude, float gps_latitude,
+                      float gps_longitude, int gps_sats, QString cmd_echo);
 
 private:
     Ui::Cansat_GUI *ui;
     Graph *graphWidgets[8];
     FrameParser *parser;
+
 };
 
 #endif // CANSAT_GUI_H
 
 /*
-string ID, string time, double packet_count,
-                       string mode, string state, double altitude, double temperature, double pressure, double voltage
-                       double gyro_r, double gyro_p, double gyro_y,
-                       double accel_r, double accel_p, double accel_y, double mag_r,
-                       double mag_p, double mag_y, double auto_gyro_rotation_rate,
-                       string gps_time, double gps_altitude, double gps_latitude,
-                       double gps_longitude, int gps_stats, string cmd_echo);
+string ID, string time, float packet_count,
+                       string mode, string state, float altitude, float temperature, float pressure, float voltage
+                       float gyro_r, float gyro_p, float gyro_y,
+                       float accel_r, float accel_p, float accel_y, float mag_r,
+                       float mag_p, float mag_y, float auto_gyro_rotation_rate,
+                       string gps_time, float gps_altitude, float gps_latitude,
+                       float gps_longitude, int gps_stats, string cmd_echo);
 */
