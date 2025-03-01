@@ -106,24 +106,9 @@ namespace Hardware
     }
   }
 
-  void setup_airspeed() 
-  {
-    Serial.println("\nInitializing Airspeed Sensor...");
 
-    // Setup the I2C address of Ox28, on bus 0, with a -1 to +1 PSI range
-    airspeed.Config(AIRSPEED_WIRE, 0x28, 1.0f, -1.0f);
-    
-    // Starting the communication with the pressure transducer */
-    if (!airspeed.Begin()) {
-      Serial.println("Could not find Airspeed Sensor, check wiring! womp womp :("); 
-      while(1){ delay(10); };
-    }
-    else {
-      Serial.println("Found Airspeed Sensor successfully.");
-    }
-  }
 
-  void read_sensors()   // read data from Teensy, BMP, BNO, and Airspeed sensors
+  void read_sensors()   // read data from Teensy, BMP, BNO, and rotary encoder sensors
   {  
     // read Teensy: vbat (voltage)
     sensor_data.vbat = ((analogRead(Common::VOLTAGE_PIN) / 1023.0) * 4.2) + 0.35;
