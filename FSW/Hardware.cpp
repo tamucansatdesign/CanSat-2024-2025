@@ -15,6 +15,7 @@ namespace Hardware
 
   Adafruit_BMP3XX bmp;
   Adafruit_BNO08x bno;
+  Encoder enc;
   Adafruit_GPS gps(&GPS_SERIAL);
   
   Camera main_cam(Common::CAMERA_PIN);
@@ -40,14 +41,16 @@ namespace Hardware
     BMP_WIRE->setClock(Common::I2C_CLOCK_SPEED);
     BNO_WIRE->begin();  // BNO085
     BNO_WIRE->setClock(Common::I2C_CLOCK_SPEED);
-    AIRSPEED_WIRE->begin();  // Airspeed
-    AIRSPEED_WIRE->setClock(Common::I2C_CLOCK_SPEED);
+    
     Serial.println("Found I2C connections successfully.");
 
     // Connect servo pins
     hs_servo.attach(Common::HS_SERVO_PIN);
     para_servo.attach(Common::PARA_SERVO_PIN);
 
+
+    // Connect to Encoder
+    
     // SD card initialization
     SD.begin(chipSelect);
 
@@ -61,7 +64,7 @@ namespace Hardware
     Serial.println("\nAll Hardware Initialized.\n");
   }
 
-  // Teensy 4.1, BMP388, BNO085, and airspeed (MS4525DO) sensors operation
+  // Teensy 4.1, BMP388, BNO085, and rotary encoder sensors operation
   void setup_BMP()
   {
     Serial.println("\nInitializing BMP388...");
@@ -164,13 +167,23 @@ namespace Hardware
           sensor_data.rotation_z = sensorValue.un.gyroscope.z * RAD_TO_DEG; // Convert from radians/sec to degrees/sec
           break;
       }
+
+
     }
 
-    // read Airspeed sensor: airspeed
-    if (airspeed.Read()) 
-    {
-      sensor_data.airspeed = bfs::Ias_mps(airspeed.pres_pa());
+    // read rotary encoder
+    static long oldPosition = -999;  
+
+    long newPosition = enc.read();
+    if(newPosition != oldPosition) {
+      int stepsPerRevolution = 24;
+      int rotations = newPosition / stepsPerRevolution;
+      int rotation_speed = rotations * 1000 / (millis() - gps_data.milliseconds);
+      sensor_data.auto_gyro_speed = rotation_speed;
+      oldPosition = newPosition;
     }
+
+    
   }
 
   // Ultimate GPS Breakout operation
@@ -233,6 +246,27 @@ namespace Hardware
     gps_data.altitude = gps.altitude;
     gps_data.sats = (byte)(unsigned int)gps.satellites;  // We do this double conversion to avoid signing issues
   }
+
+  void setup_RE()
+  {
+    Serial.println("\nInitializing Rotary Encoder...");
+    enc = Encoder(Common::ENCODER_PIN1, Common::ENCODER_PIN2);
+    pinMode(Common::ENCODER_PIN1, INPUT_PULLUP);
+    pinMode(Common::ENCODER_PIN2, INPUT_PULLUP);
+    // Check init of rotary encoder connection
+    if (digitalRead(Common::ENCODER_PIN1) != HIGH || digitalRead(Common::ENCODER_PIN2) != HIGH) {
+        Serial.println("Found Rotary Encoder successfully.");
+
+    }
+    else {
+      // UART connection failed, log error and halt
+
+      Serial.println("Could not find Rotary Encoder, check wiring! womp womp :(");
+      while (1) { delay(10); }
+    }
+  }
+
+
 
   // XBee Pro S2C operation
   void setup_XBee() 

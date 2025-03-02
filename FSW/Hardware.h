@@ -11,6 +11,7 @@
 #include <Adafruit_GPS.h>     // GPS
 #include <EEPROM.h>
 #include <Servo.h>
+#include <Encoder.h>
 #include <SD.h>
 
 // Covers initialization of sensors/radios, and any functions that utilize this hardware
@@ -34,11 +35,14 @@ namespace Hardware
 
   extern Adafruit_BMP3XX bmp;
   extern Adafruit_BNO08x bno;
+  extern Encoder enc;
   extern Adafruit_GPS gps;
   extern class Camera main_cam;
   extern class Camera bonus_cam;
-  extern Servo hs_servo;
-  extern Servo para_servo;
+  extern Servo Leg1;
+  extern Servo Leg2;
+  extern Servo Leg3;
+  extern Servo reactionWheel;
 
   extern Common::Sensor_Data sensor_data;
   extern Common::GPS_Data gps_data;

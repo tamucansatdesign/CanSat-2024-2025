@@ -29,9 +29,7 @@ namespace States
     Hardware::main_cam.update_camera(true);
     
     // Initialize payload states
-    cansat_states.HS_DEPLOYED = 'N';
-    cansat_states.HS_RELEASED = 'N';
-    cansat_states.PC_DEPLOYED = 'N';
+    
     
   }
 }

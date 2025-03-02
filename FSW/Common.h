@@ -11,7 +11,6 @@
 #define GROUND_XBEE_SERIAL Serial8
 #define BMP_WIRE (&Wire2)
 #define BNO_WIRE (&Wire2)
-#define AIRSPEED_WIRE (&Wire2)
 
 // Header containing all constants and hardware identities
 namespace Common
@@ -28,6 +27,7 @@ namespace Common
   const byte PARA_SERVO_PIN = 44;   // Servo 2 PWM pin
   const byte CAMERA_PIN = 5;        // Camera 1 trigger pin
   const byte BONUS_CAMERA_PIN = 6;  // Camera 2 trigger pin
+  const byte ENCODER_PIN1=5, ENCODER_PIN2 = 6; //encoder pins
   const byte AUDIO_BEACON_PIN = 8;  // Audio buzzer signal pin
 
   // Variable addresses for EEPROM reading and writing
