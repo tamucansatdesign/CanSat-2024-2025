@@ -6,9 +6,9 @@ namespace States
 {  
   uint16_t EE_STATE = 0;
   
-  void Standby(Common::CanSat_States &cansat_states)
+  void Standby()
   { 
-    States::processCommands(1,1,1,1,1);
+    States::processCommands(1,1,1,1,0);
     Hardware::read_gps();
     Hardware::read_sensors();
 
@@ -26,9 +26,8 @@ namespace States
     }
 
     // Start recording of main camera (horizontal view)
-    Hardware::main_cam.update_camera(true);
+    Hardware::nosecone_cam.update_camera(true);
     
-    // Initialize payload states
     
     
   }

@@ -6,26 +6,28 @@
 namespace States
 {
   extern uint16_t EE_STATE;
+  extern bool landing_legs_deployed;
 
-  // ordered by state diagram (2023-2024: State diagram was unofficially revised)
+  // ordered by state diagram (2024-2025: State diagram was unofficially revised)
   // void setup() : Bootup -> EE_STATE = 0
     // Initialize hardware
     // Update recovery parameters with EEPROM
     // Sync up RTC with GPS
-  void Standby(Common::CanSat_States &cansat_states);         // Standby -> EE_STATE = 1
+  void Standby();         // Standby -> EE_STATE = 1
     // State -> Ascent: if altitude >> 2m
     // Transmit 1 Hz telemetry
-    // Start recording of main camera (horizontal view)
+    // Start recording of nosecone camera
+    // Start Kalman filtering
+
   void Ascent();                                            // Ascent -> EE_STATE = 2
-    // State -> Separation: if airspeed << 3 m/s and altitude >> 2m
-    // Transmit 1 Hz telemetry
-  void Separation(Common::CanSat_States &cansat_states);      // Separation -> EE_STATE = 3
+
     // Reached peak altitude: 
       // State -> Descent: if airspeed >> 0 m/s and altitude < 110m
       // Transmit 1 Hz telemetry
       // Start recording of bonus camera (aft view)
-      // Deploy heat shield
-  void Descent(Common::CanSat_States &cansat_states);         // Descent -> EE_STATE = 4
+      // Start Reaction Wheel Control system
+      // Allow for landing leg MEC activation
+  void Descent();         // Descent -> EE_STATE = 4
     // Altitude 100m:
       // State -> Landing: if airspeed < 1 m/s and altitude << 2m
       // Deploy parachute
@@ -35,9 +37,9 @@ namespace States
     // Cease telemetry
     // Stop both camera recordings
     // Activate audio beacon
-  
+  void Landed();
   // helper functions
-  static void processCommands(const bool enableCX, const bool enableST, const bool enableSIM, const bool enableCAL, const bool enableBCN)
+  static void processCommands(const bool enableCX, const bool enableST, const bool enableSIM, const bool enableCAL, const bool enableMEC)
   {
     String received;
     if (Hardware::read_ground_radio(received)) 
@@ -123,24 +125,25 @@ namespace States
         }
 
         // CMD,<TEAM_ID>,BCN,ON|OFF
-        else if (enableBCN && cmd.startsWith("BCN"))
+        else if (enableMEC && cmd.startsWith("MEC"))
         {
-          if (cmd.startsWith("BCNON")) 
+          if (cmd.startsWith("MECBZON")) 
           {
             Hardware::buzzer_on();
           }
-          else 
+          else if(cmd.startsWith("MECLLOPEN"))
           {
-            Hardware::buzzer_off();
+            Hardware::landing_leg_1.write(180);
+            Hardware::landing_leg_2.write(180);
+            Hardware::landing_leg_3.write(180);
           }
         }
-        
-        // else ignore
+      
       }
     }
   }
 
-  static String build_packet(String state, const Common::CanSat_States &cansat_states)
+  static String build_packet(String state)
   {
     // <TEAM_ID>, <MISSION_TIME>, <PACKET_COUNT>, <MODE>, <STATE>, <ALTITUDE>,
     // <AIR_SPEED>, <HS_DEPLOYED>, <PC_DEPLOYED>, <TEMPERATURE>, <VOLTAGE>,

@@ -19,15 +19,20 @@ namespace Common
   const int I2C_CLOCK_SPEED = 400000; // I2C clock speed in Hz
 
   const float SEA_LEVEL = 1014.6f;
-  const uint16_t TEAM_ID = 2054;
+  const uint16_t TEAM_ID = 3181;
   const unsigned long TELEMETRY_DELAY = 1000; // 1 Hz
 
   const byte VOLTAGE_PIN = 48;      // Teensy 4.1 VIN pin
-  const byte HS_SERVO_PIN = 45;     // Servo 1 PWM pin
-  const byte PARA_SERVO_PIN = 44;   // Servo 2 PWM pin
-  const byte CAMERA_PIN = 5;        // Camera 1 trigger pin
-  const byte BONUS_CAMERA_PIN = 6;  // Camera 2 trigger pin
-  const byte ENCODER_PIN1=5, ENCODER_PIN2 = 6; //encoder pins
+  
+  const byte LANDING_LEG_1_PIN = 43; // Servo 1 PWM pin
+  const byte LANDING_LEG_2_PIN = 42; // Servo 2 PWM pin
+  const byte LANDING_LEG_3_PIN = 41; // Servo 3 PWM pin
+  const byte CAMERA_SERVO_PIN = 40; // Servo 4 PWM pin
+
+
+  const byte NOSECONE_CAMERA_PIN = 5;        // Camera 1 trigger pin
+  const byte NORTH_CAMERA_PIN = 6;  // Camera 2 trigger pin
+  const byte ENCODER_PIN1=9, ENCODER_PIN2 = 10; //encoder pins
   const byte AUDIO_BEACON_PIN = 8;  // Audio buzzer signal pin
 
   // Variable addresses for EEPROM reading and writing
@@ -35,13 +40,7 @@ namespace Common
   const uint16_t PC_ADDR = 4;  // packet count                                      ; address space: 4-6 (uint16_t = 2 bytes)
   const uint16_t ST_ADDR = 6;  // states                                            ; address space: 6-8 (uint16_t = 2 bytes)
   
-  // struct CanSat_States
-  // {
-
-  //   char HS_DEPLOYED; // heat shield deployment: deployed -> 'P' ; else 'N'
-  //   char HS_RELEASED; // heat shield released: released -> 'R' ; else 'N'
-  //   char PC_DEPLOYED; // parachute deployment: deployed -> 'C' ; else 'N'
-  // };
+  
 
   struct Sensor_Data
   {

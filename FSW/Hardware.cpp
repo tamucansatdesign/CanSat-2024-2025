@@ -18,8 +18,8 @@ namespace Hardware
   Encoder enc;
   Adafruit_GPS gps(&GPS_SERIAL);
   
-  Camera main_cam(Common::CAMERA_PIN);
-  Camera bonus_cam(Common::BONUS_CAMERA_PIN);
+  Camera nosecone_cam(Common::NOSECONE_CAMERA_PIN);
+  Camera north_cam(Common::NORTH_CAMERA_PIN);
   Servo landing_leg_1;
   Servo landing_leg_2;
   Servo landing_leg_3;
@@ -45,11 +45,14 @@ namespace Hardware
     Serial.println("Found I2C connections successfully.");
 
     // Connect servo pins
-    hs_servo.attach(Common::HS_SERVO_PIN);
-    para_servo.attach(Common::PARA_SERVO_PIN);
+    landing_leg_1.attach(Common::LANDING_LEG_1_PIN);
+    landing_leg_2.attach(Common::LANDING_LEG_2_PIN);
+    landing_leg_3.attach(Common::LANDING_LEG_3_PIN);
+    camera_servo.attach(Common::CAMERA_SERVO_PIN);
+  
 
 
-    // Connect to Encoder
+      
     
     // SD card initialization
     SD.begin(chipSelect);

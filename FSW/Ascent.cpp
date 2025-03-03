@@ -18,7 +18,7 @@ namespace States
     
     // Transmit 1 Hz telemetry
     if (Hardware::CX) {
-      String packet = States::build_packet("Ascent", pay_states);
+      String packet = States::build_packet("Ascent");
       Serial.println(packet);
       Hardware::write_ground_radio(packet);
     }

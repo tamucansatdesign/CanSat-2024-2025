@@ -14,8 +14,8 @@ namespace States
     Hardware::CX = false;
 
     // Stop both camera recordings
-    Hardware::main_cam.update_camera(false);
-    Hardware::bonus_cam.update_camera(false);
+    Hardware::nosecone_cam.update_camera(false);
+    Hardware::north_cam.update_camera(false);
     
     // Activate audio beacon
     Hardware::buzzer_on();

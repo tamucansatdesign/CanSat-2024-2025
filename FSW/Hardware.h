@@ -37,8 +37,8 @@ namespace Hardware
   extern Adafruit_BNO08x bno;
   extern Encoder enc;
   extern Adafruit_GPS gps;
-  extern class Camera main_cam;
-  extern class Camera bonus_cam;
+  extern class Camera nosecone_cam;
+  extern class Camera north_cam;
   extern Servo Leg1;
   extern Servo Leg2;
   extern Servo Leg3;

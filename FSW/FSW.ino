@@ -30,30 +30,30 @@ void setup() {
   // Hardware::main_cam.update_camera(true);
 }
 
-void loop() {
-  States::processCommands(1,1,1,1,1);
+// void loop() {
+//   States::processCommands(1,1,1,1,1);
 
-  Hardware::read_gps();
-  Hardware::read_sensors();
+//   Hardware::read_gps();
+//   Hardware::read_sensors();
 
-  if (Hardware::CX) {
-    String packet = States::build_packet("Test", cansat_states);
-    Serial.println(packet);
-    Hardware::write_ground_radio(packet);
-  }
+//   if (Hardware::CX) {
+//     String packet = States::build_packet("Test", cansat_states);
+//     Serial.println(packet);
+//     Hardware::write_ground_radio(packet);
+//   }
 
-  delay(Common::TELEMETRY_DELAY);
+//   delay(Common::TELEMETRY_DELAY);
 
-  if (Hardware::SIM_ACTIVATE) {
-    // Hardware::main_cam.update_camera(false);
-    Hardware::buzzer_on();
-    Serial.println("buzzer on");
-  }
-  else {
-    Hardware::buzzer_off();
-    Serial.println("buzzer off");
-  }
-}
+//   if (Hardware::SIM_ACTIVATE) {
+//     // Hardware::main_cam.update_camera(false);
+//     Hardware::buzzer_on();
+//     Serial.println("buzzer on");
+//   }
+//   else {
+//     Hardware::buzzer_off();
+//     Serial.println("buzzer off");
+//   }
+// }
 
 void setup() {
   Serial.begin(Common::SERIAL_BAUD);
