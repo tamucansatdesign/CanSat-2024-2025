@@ -124,7 +124,7 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>20</y>
+      <y>0</y>
       <width>113</width>
       <height>22</height>
      </rect>
@@ -134,7 +134,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>0</y>
       <width>61</width>
       <height>16</height>
      </rect>
@@ -299,7 +299,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>GPS Latitude and Longitude: 49.7532,-57.5374</string>
+     <string>GPS Lat and Long: 49.7532,-57.5374</string>
     </property>
    </widget>
    <widget class="QCustomPlot" name="graph8" native="true">
@@ -312,6 +312,29 @@
      </rect>
     </property>
    </widget>
+   <widget class="QLineEdit" name="lineEdit_3">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>30</y>
+      <width>113</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>61</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Baud Rate</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -319,7 +342,7 @@
      <x>0</x>
      <y>0</y>
      <width>1361</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu2025_CanSat_GUI">

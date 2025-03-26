@@ -72,17 +72,18 @@ Cansat_GUI::Cansat_GUI(QWidget *parent)
 
 }
 
-void FrameParser::updateGUI(int ID, float time, float packet_count,
-                  QString mode, QString state, float altitude, float temperature, float pressure, float voltage,
-                  float gyro_r, float gyro_p, float gyro_y,
-                  float accel_r, float accel_p, float accel_y, float mag_r,
-                  float mag_p, float mag_y, float auto_gyro_rotation_rate,
-                  float gps_time, float gps_altitude, float gps_latitude,
-                  float gps_longitude, int gps_sats, QString cmd_echo){
+void Cansat_GUI::updateGUI(int ID, float time, float packet_count,
+                          QString mode, QString state, float altitude, float temperature, float pressure, float voltage,
+                          float gyro_r, float gyro_p, float gyro_y,
+                          float accel_r, float accel_p, float accel_y, float mag_r,
+                          float mag_p, float mag_y, float auto_gyro_rotation_rate,
+                          float gps_time, float gps_altitude, float gps_latitude,
+                          float gps_longitude, int gps_sats, QString cmd_echo){
 
 
-    graphWidgets[0]->addPoint(0, time, altitude)
-    graphWidgets[0]->addPoint(1, time, altitude)
+    graphWidgets[0]->addPoint(0, time, altitude);
+    graphWidgets[0]->addPoint(1, time, altitude);
+
 
 }
 
