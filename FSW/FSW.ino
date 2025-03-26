@@ -2,7 +2,6 @@
 #include "Hardware.h"
 #include "States.h"
 
-Common::CanSat_States cansat_states;
 
 // IMPROVEMENTS:
 // when processor resets request update from GSC: lastCMD, cameras operating?
@@ -19,16 +18,16 @@ Common::CanSat_States cansat_states;
 // Test mission time and set time command 
 // Test audio buzzer 
 
-void setup() {
-  // Start Serial communication, if debugging
-  Serial.begin(Common::SERIAL_BAUD);
-  Serial.println("Serial Connection Established.");
+// void setup() {
+//   // Start Serial communication, if debugging
+//   Serial.begin(Common::SERIAL_BAUD);
+//   Serial.println("Serial Connection Established.");
 
-  // Initialize all components  
-  Hardware::init();
+//   // Initialize all components  
+//   Hardware::init();
 
-  // Hardware::main_cam.update_camera(true);
-}
+//   // Hardware::main_cam.update_camera(true);
+// }
 
 // void loop() {
 //   States::processCommands(1,1,1,1,1);
@@ -68,30 +67,28 @@ void setup() {
   EEPROM.get(Common::ST_ADDR, States::EE_STATE);
 
   // Sync up RTC with GPS
-  setTime(Hardware::gps_data.hour, Hardware::gps_data.minute, Hardware::gps_data.seconds, Hardware::gps_data.day, Hardware::gps_data.month, Hardware::gps_data.year);
+  // setTime(Hardware::gps_data.hours, Hardware::gps_data.minutes, Hardware::gps_data.seconds, Hardware::gps_data.day, Hardware::gps_data.month, Hardware::gps_data.year);
 }
 
 void loop() {
   // Loop through each state 
   switch (States::EE_STATE)
   { 
+    
     case 1:
-      States::Standby(cansat_states);
-      break;
-    case 2:
       States::Ascent();
       break;
-    case 3:
-      States::Separation(cansat_states);
+    case 2:
+      States::Descent();
       break;
-    case 4:
-      States::Descent(cansat_states);
+    case 3:
+      States::PayloadRelease();
       break;    
     case 5:
       States::Landing();
       break;
     default:
-      States::Standby(cansat_states);
+      States::Standby();
       break;
   }
   delay(Common::TELEMETRY_DELAY);

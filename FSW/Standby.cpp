@@ -20,7 +20,7 @@ namespace States
     
     // Transmit 1 Hz telemetry
     if (Hardware::CX) {
-      String packet = States::build_packet("Standby", cansat_states);
+      String packet = Hardware::build_packet("Standby");
       Serial.println(packet);
       Hardware::write_ground_radio(packet);
     }
@@ -31,4 +31,4 @@ namespace States
     
     
   }
-}
+};

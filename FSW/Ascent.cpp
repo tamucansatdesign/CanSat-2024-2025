@@ -11,7 +11,7 @@ namespace States
     Hardware::read_sensors();
 
     // State -> Separation: if airspeed << 3 m/s and altitude >> 2m
-    if (Hardware::sensor_data.airspeed < 3 && Hardware::sensor_data.altitude > 10) {
+    if (Hardware::sensor_data.altitude > 10) {
       EE_STATE = 3;
       // TODO: EEPROM.put(Common::ST_ADDR, EE_STATE);
     }

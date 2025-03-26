@@ -31,7 +31,7 @@ namespace Common
 
 
   const byte NOSECONE_CAMERA_PIN = 5;        // Camera 1 trigger pin
-  const byte NORTH_CAMERA_PIN = 6;  // Camera 2 trigger pin
+  const byte GYRO_CAMERA_PIN = 6;  // Camera 2 trigger pin
   const byte ENCODER_PIN1=9, ENCODER_PIN2 = 10; //encoder pins
   const byte AUDIO_BEACON_PIN = 8;  // Audio buzzer signal pin
 
@@ -49,14 +49,14 @@ namespace Common
     float temperature; // BMP388
     float pressure; // BMP388
     float gyro_r; // BNO 085: tilt in X (roll)
-    float gyro_y; // BNO 085: rotation speed around Y
-    float gyro_z; // BNO 085: rotation speed around Z
+    float gyro_p; // BNO 085: rotation speed around Y
+    float gyro_y; // BNO 085: rotation speed around Z
     float accel_r; // BNO 085: accel in X (roll)
-    float accel_y; // BNO 085: accel in Y (pitch)
-    float accel_z; // BNO 085: accel in Z (yaw)
-    float mag_x; // BNO 085: magnetic field in X
-    float mag_y; // BNO 085: magnetic field in Y
-    float mag_z; // BNO 085: magnetic field in Z
+    float accel_p; // BNO 085: accel in Y (pitch)
+    float accel_y; // BNO 085: accel in Z (yaw)
+    float mag_r; // BNO 085: magnetic field in X
+    float mag_p; // BNO 085: magnetic field in Y
+    float mag_y; // BNO 085: magnetic field in Z
     float auto_gyro_speed; // auto gyro rotation speed
   };
 

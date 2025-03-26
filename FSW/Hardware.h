@@ -7,12 +7,13 @@
 #include <Wire.h>             // I2C protocol
 #include <Adafruit_BMP3XX.h>  // BMP388 
 #include <Adafruit_BNO08x.h>  // BNO085 
-#include "airdata.h"          // converting differential pressure from airspeed sensor to indicated airspeed
 #include <Adafruit_GPS.h>     // GPS
+#include <TeensyThreads.h>    // Multithreading
 #include <EEPROM.h>
 #include <Servo.h>
 #include <Encoder.h>
 #include <SD.h>
+
 
 // Covers initialization of sensors/radios, and any functions that utilize this hardware
 namespace Hardware
@@ -38,12 +39,18 @@ namespace Hardware
   extern Encoder enc;
   extern Adafruit_GPS gps;
   extern class Camera nosecone_cam;
-  extern class Camera north_cam;
+  extern class Camera gyro_cam;
   extern Servo Leg1;
   extern Servo Leg2;
   extern Servo Leg3;
-  extern Servo reactionWheel;
+  extern Servo reactionWheel; //change to DC motor later
 
+//add mutex's
+  extern Threads::Mutex gps_mutex;
+  extern Threads::Mutex write_mutex;
+  extern Threads::Mutex read_mutex;
+  extern Threads::Mutex loop_mutex;
+  
   extern Common::Sensor_Data sensor_data;
   extern Common::GPS_Data gps_data;
   

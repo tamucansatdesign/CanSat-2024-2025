@@ -24,7 +24,10 @@ namespace Hardware
   Servo landing_leg_2;
   Servo landing_leg_3;
   Servo camera_servo;
-
+  Threads::Mutex gps_mutex;
+  Threads::Mutex write_mutex;
+  Threads::Mutex read_mutex;
+  Threads::Mutex loop_mutex;
   Common::Sensor_Data sensor_data;
   Common::GPS_Data gps_data;
   
@@ -224,30 +227,29 @@ namespace Hardware
     // }
   }
 
-  void read_gps()
+  void read_gps_loop()
   {
-    bool newData = false;
-
-    while (!gps.newNMEAreceived())
+    gps_mutex.lock();
+    char c = gps.read();
+    if(gps.newNMEAreceived())
     {
-      char c = gps.read();
-    }
-    newData = gps.parse(gps.lastNMEA());
-
-    if (newData)
-    {
+      if(gps.parse(gps.lastNMEA()))
+      {
       //Serial.println(String(gps.hour) + ":" + String(gps.minute) + ":" + String(gps.seconds) + "." + String(gps.milliseconds));
       setTime(gps.hour, gps.minute, gps.seconds, gps.day, gps.month, gps.year);
-    }
+    
 
-    gps_data.hours = gps.hour;
-    gps_data.minutes = gps.minute;
-    gps_data.seconds = gps.seconds;
-    gps_data.milliseconds = gps.milliseconds;
-    gps_data.latitude = gps.latitude;
-    gps_data.longitude = gps.longitude;
-    gps_data.altitude = gps.altitude;
-    gps_data.sats = (byte)(unsigned int)gps.satellites;  // We do this double conversion to avoid signing issues
+      gps_data.hours = gps.hour;
+      gps_data.minutes = gps.minute;
+      gps_data.seconds = gps.seconds;
+      gps_data.milliseconds = gps.milliseconds;
+      gps_data.latitude = gps.latitude;
+      gps_data.longitude = gps.longitude;
+      gps_data.altitude = gps.altitude;
+      gps_data.sats = (byte)(unsigned int)gps.satellites;  // We do this double conversion to avoid signing issues
+      }
+    }
+    gps_mutex.unlock();
   }
 
   void setup_RE()
@@ -390,5 +392,151 @@ namespace Hardware
         firstCameraCall = true;
       }
   }
+  // helper functions
+  static void processCommands(const bool enableCX, const bool enableST, const bool enableSIM, const bool enableCAL, const bool enableMEC)
+  {
+    String received;
+    if (Hardware::read_ground_radio(received)) 
+    {
+      // remove whitespace and commas from received string
+      received.trim();
+      received.replace(",", "");
+
+      // check if command sent with proper team id
+      if (received.startsWith("CMD" + String(Common::TEAM_ID))) 
+      {
+        String cmd = received.substring(7,received.length());
+        Hardware::lastCMD = cmd;
+        Serial.println(cmd);
+
+        // CMD,<TEAM_ID>,CX,ON|OFF
+        if (enableCX && cmd.startsWith("CX")) 
+        {
+          if (cmd.startsWith("CXON")) 
+          {
+            Hardware::CX = true;
+          }
+          else 
+          {
+            Hardware::CX = false;
+          }
+        }
+
+        // CMD,<TEAM_ID>,ST,<UTC_TIME>|GPS
+        else if (enableST && cmd.startsWith("ST")) 
+        {
+          if (cmd.startsWith("STGPS"))
+          {
+            // Set to GPS time
+            setTime(Hardware::gps_data.hours, Hardware::gps_data.minutes, Hardware::gps_data.seconds, day(), month(), year());
+          }
+          else 
+          {
+            // Set to utc time
+            String utc = cmd.substring(2,cmd.length());
+
+            int hour = utc.substring(0, 2).toInt();
+            int minute = utc.substring(3, 5).toInt();
+            int seconds = utc.substring(6, 8).toInt();
+
+            setTime(hour, minute, seconds, Hardware::gps_data.day, Hardware::gps_data.month, Hardware::gps_data.year);
+          }
+        }
+
+        // CMD,<TEAM_ID>,SIM,<MODE>
+        else if (enableSIM && cmd.startsWith("SIM")) 
+        {
+          if (cmd.startsWith("SIMENABLE")) 
+          {
+            Hardware::SIM_ENABLE = true;
+          }
+          else if (cmd.startsWith("SIMACTIVATE")) 
+          {
+            if (Hardware::SIM_ENABLE) 
+            {
+              Hardware::SIM_ACTIVATE = true;
+            }
+          }
+          else if (cmd.startsWith("SIMDISABLE")) 
+          {
+            Hardware::SIM_ENABLE = false;
+            Hardware::SIM_ACTIVATE = false;
+          }
+        }
+
+        // CMD,<TEAM_ID>,SIMP,<PRESSURE>
+        else if (enableSIM && cmd.startsWith("SIMP")) 
+        {
+          Hardware::SIM_PRESSURE = cmd.substring(4,cmd.length()).toInt();
+        }
+
+        // CMD,<TEAM_ID>,CAL 
+        else if (enableCAL && cmd.startsWith("CAL")) 
+        {
+          Hardware::read_sensors();
+          Hardware::EE_BASE_PRESSURE = Hardware::sensor_data.pressure / 100;
+          // TODO: EEPROM.put(Common::BP_ADDR, Hardware::EE_BASE_PRESSURE);
+        }
+
+        // CMD,<TEAM_ID>,BCN,ON|OFF
+        else if (enableMEC && cmd.startsWith("MEC"))
+        {
+          if (cmd.startsWith("MECBZON")) 
+          {
+            Hardware::buzzer_on();
+          }
+          else if(cmd.startsWith("MECLLOPEN"))
+          {
+            Hardware::landing_leg_1.write(180);
+            Hardware::landing_leg_2.write(180);
+            Hardware::landing_leg_3.write(180);
+          }
+        }
+      
+      }
+    }
+  }
+
+  static String build_packet(String state)
+  {
+    // <TEAM_ID>, <MISSION_TIME>, <PACKET_COUNT>, <MODE>, <STATE>, <ALTITUDE>,
+    // <AIR_SPEED>, <HS_DEPLOYED>, <PC_DEPLOYED>, <TEMPERATURE>, <VOLTAGE>,
+    // <PRESSURE>, <GPS_TIME>, <GPS_ALTITUDE>, <GPS_LATITUDE>, <GPS_LONGITUDE>,
+    // <GPS_SATS>, <TILT_X>, <TILT_Y>, <ROT_Z>, <CMD_ECHO>
+    String packet = String(Common::TEAM_ID) + ",";
+    packet += String(hour()) + ":" + String(minute()) + ":" + String(second()) + ",";
+    packet += String(Hardware::EE_PACKET_COUNT) + ",";
+    if (Hardware::SIM_ACTIVATE && Hardware::SIM_ENABLE)
+      packet += "S,";
+    else
+      packet += "F,";
+    packet += state + ",";
+    packet += String(Hardware::sensor_data.altitude) + ","; 
+    packet += String(Hardware::sensor_data.temperature) + ",";
+    packet += String(Hardware::sensor_data.pressure) + ",";
+    packet += String(Hardware::sensor_data.vbat) + ",";
+    packet += String(Hardware::sensor_data.gyro_r) + ",";
+    packet += String(Hardware::sensor_data.gyro_p) + ",";    
+    packet += String(Hardware::sensor_data.gyro_y) + ",";
+    packet += String(Hardware::sensor_data.accel_r) + ",";
+    packet += String(Hardware::sensor_data.accel_p) + ",";    
+    packet += String(Hardware::sensor_data.accel_y) + ",";
+    packet += String(Hardware::sensor_data.mag_r) + ",";
+    packet += String(Hardware::sensor_data.mag_p) + ",";    
+    packet += String(Hardware::sensor_data.mag_y) + ",";
+    packet += String(Hardware::sensor_data.auto_gyro_speed) + ",";
+    packet += String(Hardware::gps_data.hours) + ":" + String(Hardware::gps_data.minutes) + ":" + String(Hardware::gps_data.seconds) + ",";
+    packet += String(Hardware::gps_data.altitude) + ",";  
+    packet += String(Hardware::gps_data.latitude) + ","; 
+    packet += String(Hardware::gps_data.longitude) + ","; 
+    packet += String(Hardware::gps_data.sats) + ",";
+    packet += Hardware::lastCMD + "\r\n";
+
+    ++Hardware::EE_PACKET_COUNT;
+    // TODO: EEPROM.put(Common::PC_ADDR, Hardware::EE_PACKET_COUNT);
+
+    return packet;
+  }
+
 
 }
