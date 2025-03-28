@@ -18,20 +18,21 @@ class Cansat_GUI : public QMainWindow
 public:
     Cansat_GUI(QWidget *parent = nullptr);
     ~Cansat_GUI();
-
+    FrameParser *parser;
 private slots:
-    void updateGUI(int ID, float time, float packet_count,
+    void updateGUI(int ID, QString time, float packet_count,
                       QString mode, QString state, float altitude, float temperature, float pressure, float voltage,
                       float gyro_r, float gyro_p, float gyro_y,
                       float accel_r, float accel_p, float accel_y, float mag_r,
                       float mag_p, float mag_y, float auto_gyro_rotation_rate,
-                      float gps_time, float gps_altitude, float gps_latitude,
+                      QString gps_time, float gps_altitude, float gps_latitude,
                       float gps_longitude, int gps_sats, QString cmd_echo);
 
 private:
     Ui::Cansat_GUI *ui;
     Graph *graphWidgets[8];
-    FrameParser *parser;
+    QMap<float, QString> timeLabels;
+    QSharedPointer<QCPAxisTickerText> textTicker;
 
 };
 

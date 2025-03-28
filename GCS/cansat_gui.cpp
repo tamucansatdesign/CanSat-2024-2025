@@ -1,11 +1,12 @@
 #include "cansat_gui.h"
 #include "ui_cansat_gui.h"
 
-Cansat_GUI::Cansat_GUI(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::Cansat_GUI)
+Cansat_GUI::Cansat_GUI(QWidget *parent) : QMainWindow(parent), ui(new Ui::Cansat_GUI), parser(new FrameParser(this))
 {
     ui->setupUi(this);
+
+    QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+
 
     //Altitude Graph
     graphWidgets[0] = new Graph(ui->graph1, "Mission Time (s)", "Altitude (m)", 2);
@@ -13,8 +14,8 @@ Cansat_GUI::Cansat_GUI(QWidget *parent)
     graphWidgets[0]->setGraphName(1,"GPS");
     graphWidgets[0]->setGraphColor(1, QColorConstants::Red);
     graphWidgets[0]->setRandomData(0);
-    //graphWidgets[0]->addPoint(0, parser->GetPresAltitude(), parser->GetMissionTime());
     graphWidgets[0]->setRandomData(1);
+    graphWidgets[0]->getQCustomPlot()->xAxis->setTicker(textTicker);
 
     //Temperature Graph
     graphWidgets[1] = new Graph(ui->graph2, "Mission Time (s)", "Temperature (°C)");
@@ -68,21 +69,65 @@ Cansat_GUI::Cansat_GUI(QWidget *parent)
     graphWidgets[7] = new Graph(ui->graph8, "Longitude (deg)", "Latitude (deg)");
     graphWidgets[7]->setGraphName(0, "COORD");
     graphWidgets[7]->setRandomData(0);
-
+    //connecting signals and slots
+    connect(parser, &FrameParser::newDataParsed, this, &Cansat_GUI::updateGUI);
 
 }
 
-void Cansat_GUI::updateGUI(int ID, float time, float packet_count,
+void Cansat_GUI::updateGUI(int ID, QString time, float packet_count,
                           QString mode, QString state, float altitude, float temperature, float pressure, float voltage,
                           float gyro_r, float gyro_p, float gyro_y,
                           float accel_r, float accel_p, float accel_y, float mag_r,
                           float mag_p, float mag_y, float auto_gyro_rotation_rate,
-                          float gps_time, float gps_altitude, float gps_latitude,
+                          QString gps_time, float gps_altitude, float gps_latitude,
                           float gps_longitude, int gps_sats, QString cmd_echo){
 
 
-    graphWidgets[0]->addPoint(0, time, altitude);
-    graphWidgets[0]->addPoint(1, time, altitude);
+    auto time_result = parser->TimeToFloat(time);
+    float float_time = time_result.first;
+    QString string_time = time_result.second;
+
+
+
+    textTicker = QSharedPointer<QCPAxisTickerText>(new QCPAxisTickerText);
+
+
+    graphWidgets[0]->getQCustomPlot()->xAxis->setTicker(textTicker);
+    graphWidgets[0]->addPoint(0, float_time, altitude);
+    graphWidgets[0]->addPoint(1, float_time, altitude);
+
+    // Temperature Graph
+    graphWidgets[1]->getQCustomPlot()->xAxis->setTicker(textTicker);
+    graphWidgets[1]->addPoint(0, float_time, temperature);
+
+    // Pressure Graph
+    graphWidgets[2]->getQCustomPlot()->xAxis->setTicker(textTicker);
+    graphWidgets[2]->addPoint(0, float_time, pressure);
+
+    // Gyroscope Graph
+    graphWidgets[3]->getQCustomPlot()->xAxis->setTicker(textTicker);
+    graphWidgets[3]->addPoint(0, float_time, gyro_r);
+    graphWidgets[3]->addPoint(1, float_time, gyro_p);
+    graphWidgets[3]->addPoint(2, float_time, gyro_y);
+
+    // Accelerometer Graph
+    graphWidgets[4]->getQCustomPlot()->xAxis->setTicker(textTicker);
+    graphWidgets[4]->addPoint(0, float_time, accel_r);
+    graphWidgets[4]->addPoint(1, float_time, accel_p);
+    graphWidgets[4]->addPoint(2, float_time, accel_y);
+
+    // Magnetometer Graph
+    graphWidgets[5]->getQCustomPlot()->xAxis->setTicker(textTicker);
+    graphWidgets[5]->addPoint(0, float_time, mag_r);
+    graphWidgets[5]->addPoint(1, float_time, mag_p);
+    graphWidgets[5]->addPoint(2, float_time, mag_y);
+
+    // Auto Gyro Descender Graph
+    graphWidgets[6]->getQCustomPlot()->xAxis->setTicker(textTicker);
+    graphWidgets[6]->addPoint(0, float_time, auto_gyro_rotation_rate);
+
+    // GPS Coordinate Graph
+    graphWidgets[7]->addPoint(0, gps_longitude, gps_latitude);
 
 
 }

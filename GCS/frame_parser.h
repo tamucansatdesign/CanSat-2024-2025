@@ -34,7 +34,7 @@ class FrameParser : public QObject
 public:
     explicit FrameParser(QObject *parent = nullptr);
     void startSerialCommunication(const QString &portName, int baudRate);
-
+    QPair<float, QString> TimeToFloat(QString timeString);
 signals:
     void newDataParsed(int ID, QString time, int packet_count,
                        QString mode, QString state, float altitude, float temperature, float pressure, float voltage,

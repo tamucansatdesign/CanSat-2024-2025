@@ -59,10 +59,28 @@ void FrameParser::startSerialCommunication(const QString &portName, int baudRate
     }
 }
 
-float FrameParser::TimeToFloat(QString string){
+QPair<float, QString> FrameParser::TimeToFloat(QString timeString) {
+    // Split the time string (assumed format: HH:MM:SS)
+    QStringList timeParts = timeString.split(":");
 
+    if (timeParts.size() != 3) {
+        qDebug() << "Invalid time format: " << timeString;
+        return QPair<float, QString>(0.0f, timeString);
+    }
 
-    return
+    bool ok1, ok2, ok3;
+    int hours = timeParts[0].toInt(&ok1);
+    int minutes = timeParts[1].toInt(&ok2);
+    float seconds = timeParts[2].toFloat(&ok3);
+
+    if (!ok1 || !ok2 || !ok3) {
+        qDebug() << "Error converting time components";
+        return QPair<float, QString>(0.0f, timeString);
+    }
+
+    // Convert to total seconds
+    float totalSeconds = hours * 3600.0f + minutes * 60.0f + seconds;
+    return QPair<float, QString>(totalSeconds, timeString);
 }
 
 
@@ -76,7 +94,7 @@ void FrameParser::readSerialData()
         QStringList values = csvData.split(",");
         if (values.size() >= 25) {  // Ensure the data is valid
             int ID = values[0].toInt();
-            float time = TimeToFloat(values[1]);
+            QString time = values[1];
             int packet_count = values[2].toInt();
             QString mode = values[3];
             QString state = values[4];
@@ -94,7 +112,7 @@ void FrameParser::readSerialData()
             float mag_p = values[16].toFloat();
             float mag_y = values[17].toFloat();
             float auto_gyro_rotation_rate = values[18].toFloat();
-            float gps_time = TimeToFloat(values[19]);
+            QString gps_time = values[19];
             float gps_altitude = values[20].toFloat();
             float gps_latitude = values[21].toFloat();
             float gps_longitude = values[22].toFloat();
