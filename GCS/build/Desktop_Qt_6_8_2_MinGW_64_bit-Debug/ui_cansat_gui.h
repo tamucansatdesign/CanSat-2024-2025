@@ -54,6 +54,8 @@ public:
     QLabel *label_5;
     QLabel *label_6;
     QCustomPlot *graph8;
+    QLineEdit *lineEdit_3;
+    QLabel *label_7;
     QMenuBar *menubar;
     QMenu *menu2025_CanSat_GUI;
     QMenu *menufd;
@@ -98,10 +100,10 @@ public:
         pushButton_2->setGeometry(QRect(360, 20, 75, 24));
         lineEdit = new QLineEdit(centralwidget);
         lineEdit->setObjectName("lineEdit");
-        lineEdit->setGeometry(QRect(80, 20, 113, 22));
+        lineEdit->setGeometry(QRect(80, 0, 113, 22));
         label = new QLabel(centralwidget);
         label->setObjectName("label");
-        label->setGeometry(QRect(10, 20, 61, 16));
+        label->setGeometry(QRect(10, 0, 61, 16));
         lineEdit_2 = new QLineEdit(centralwidget);
         lineEdit_2->setObjectName("lineEdit_2");
         lineEdit_2->setGeometry(QRect(1100, 10, 113, 22));
@@ -142,10 +144,16 @@ public:
         graph8 = new QCustomPlot(centralwidget);
         graph8->setObjectName("graph8");
         graph8->setGeometry(QRect(1020, 310, 301, 241));
+        lineEdit_3 = new QLineEdit(centralwidget);
+        lineEdit_3->setObjectName("lineEdit_3");
+        lineEdit_3->setGeometry(QRect(80, 30, 113, 22));
+        label_7 = new QLabel(centralwidget);
+        label_7->setObjectName("label_7");
+        label_7->setGeometry(QRect(10, 30, 61, 16));
         Cansat_GUI->setCentralWidget(centralwidget);
         menubar = new QMenuBar(Cansat_GUI);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1361, 22));
+        menubar->setGeometry(QRect(0, 0, 1361, 25));
         menu2025_CanSat_GUI = new QMenu(menubar);
         menu2025_CanSat_GUI->setObjectName("menu2025_CanSat_GUI");
         menufd = new QMenu(menubar);
@@ -189,7 +197,8 @@ public:
         label_3->setText(QCoreApplication::translate("Cansat_GUI", "GPS Sats: 0", nullptr));
         label_4->setText(QCoreApplication::translate("Cansat_GUI", "Packet Count: 100", nullptr));
         label_5->setText(QCoreApplication::translate("Cansat_GUI", "Voltage: 8.7 V", nullptr));
-        label_6->setText(QCoreApplication::translate("Cansat_GUI", "GPS Latitude and Longitude: 49.7532,-57.5374", nullptr));
+        label_6->setText(QCoreApplication::translate("Cansat_GUI", "GPS Lat and Long: 49.7532,-57.5374", nullptr));
+        label_7->setText(QCoreApplication::translate("Cansat_GUI", "Baud Rate", nullptr));
         menu2025_CanSat_GUI->setTitle(QCoreApplication::translate("Cansat_GUI", "2025 CanSat GUI", nullptr));
         menufd->setTitle(QCoreApplication::translate("Cansat_GUI", "Falling with Style", nullptr));
     } // retranslateUi

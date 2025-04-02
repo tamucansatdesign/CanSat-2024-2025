@@ -40,7 +40,7 @@ struct qt_meta_tag_ZN10Cansat_GUIE_t {};
 #ifdef QT_MOC_HAS_STRINGDATA
 static constexpr auto qt_meta_stringdata_ZN10Cansat_GUIE = QtMocHelpers::stringData(
     "Cansat_GUI",
-    "updateGraphs",
+    "updateGUI",
     "",
     "ID",
     "time",
@@ -89,7 +89,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10Cansat_GUIE[] = {
        1,   25,   20,    2, 0x08,    1 /* Private */,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Float, QMetaType::QString, QMetaType::QString, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::QString, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Int, QMetaType::QString,    3,    4,    5,    6,    7,    8,    9,   10,   11,   12,   13,   14,   15,   16,   17,   18,   19,   20,   21,   22,   23,   24,   25,   26,   27,
+    QMetaType::Void, QMetaType::Int, QMetaType::Float, QMetaType::Float, QMetaType::QString, QMetaType::QString, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Float, QMetaType::Int, QMetaType::QString,    3,    4,    5,    6,    7,    8,    9,   10,   11,   12,   13,   14,   15,   16,   17,   18,   19,   20,   21,   22,   23,   24,   25,   26,   27,
 
        0        // eod
 };
@@ -103,28 +103,28 @@ Q_CONSTINIT const QMetaObject Cansat_GUI::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_tag_ZN10Cansat_GUIE_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<Cansat_GUI, std::true_type>,
-        // method 'updateGraphs'
+        // method 'updateGUI'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        QtPrivate::TypeAndForceComplete<float, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        QtPrivate::TypeAndForceComplete<float, std::false_type>,
-        QtPrivate::TypeAndForceComplete<float, std::false_type>,
-        QtPrivate::TypeAndForceComplete<float, std::false_type>,
-        QtPrivate::TypeAndForceComplete<float, std::false_type>,
-        QtPrivate::TypeAndForceComplete<float, std::false_type>,
-        QtPrivate::TypeAndForceComplete<float, std::false_type>,
-        QtPrivate::TypeAndForceComplete<float, std::false_type>,
-        QtPrivate::TypeAndForceComplete<float, std::false_type>,
-        QtPrivate::TypeAndForceComplete<float, std::false_type>,
-        QtPrivate::TypeAndForceComplete<float, std::false_type>,
-        QtPrivate::TypeAndForceComplete<float, std::false_type>,
-        QtPrivate::TypeAndForceComplete<float, std::false_type>,
         QtPrivate::TypeAndForceComplete<float, std::false_type>,
         QtPrivate::TypeAndForceComplete<float, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
+        QtPrivate::TypeAndForceComplete<float, std::false_type>,
         QtPrivate::TypeAndForceComplete<float, std::false_type>,
         QtPrivate::TypeAndForceComplete<float, std::false_type>,
         QtPrivate::TypeAndForceComplete<float, std::false_type>,
@@ -139,7 +139,7 @@ void Cansat_GUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     auto *_t = static_cast<Cansat_GUI *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->updateGraphs((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[8])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[9])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[10])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[11])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[12])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[13])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[14])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[15])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[16])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[17])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[18])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[19])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[20])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[21])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[22])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[23])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[24])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[25]))); break;
+        case 0: _t->updateGUI((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[8])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[9])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[10])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[11])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[12])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[13])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[14])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[15])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[16])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[17])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[18])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[19])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[20])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[21])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[22])),(*reinterpret_cast< std::add_pointer_t<float>>(_a[23])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[24])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[25]))); break;
         default: ;
         }
     }

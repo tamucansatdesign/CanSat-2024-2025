@@ -80,31 +80,9 @@ Makefile: ../../CanSat_GUI2.pro C:/Qt/6.8.2/mingw_64/mkspecs/win32-g++/qmake.con
 		C:/Qt/6.8.2/mingw_64/mkspecs/common/g++-win32.conf \
 		C:/Qt/6.8.2/mingw_64/mkspecs/common/windows-desktop.conf \
 		C:/Qt/6.8.2/mingw_64/mkspecs/qconfig.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_ext_archive.pri \
 		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_ext_freetype.pri \
 		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_ext_libjpeg.pri \
 		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_ext_libpng.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_ext_yaml.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_application_main_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_application_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_common_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_crypto_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_dbus_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_intent_client_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_intent_server_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_main_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_manager_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_monitor_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_package_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_plugininterfaces_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_qml.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_qml_application.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_qml_application_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_qml_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_qml_systemui.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_qml_systemui_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_shared_main_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_window_private.pri \
 		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_concurrent.pri \
 		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_concurrent_private.pri \
 		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_core.pri \
@@ -184,10 +162,6 @@ Makefile: ../../CanSat_GUI2.pro C:/Qt/6.8.2/mingw_64/mkspecs/win32-g++/qmake.con
 		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri \
 		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri \
 		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quick.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quick3dphysics.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quick3dphysics_private.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quick3dphysicshelpers.pri \
-		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quick3dphysicshelpers_private.pri \
 		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quick_private.pri \
 		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quickcontrols2.pri \
 		C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri \
@@ -304,31 +278,9 @@ C:/Qt/6.8.2/mingw_64/mkspecs/common/windows-vulkan.conf:
 C:/Qt/6.8.2/mingw_64/mkspecs/common/g++-win32.conf:
 C:/Qt/6.8.2/mingw_64/mkspecs/common/windows-desktop.conf:
 C:/Qt/6.8.2/mingw_64/mkspecs/qconfig.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_ext_archive.pri:
 C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_ext_freetype.pri:
 C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_ext_libjpeg.pri:
 C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_ext_libpng.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_ext_yaml.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_application_main_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_application_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_common_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_crypto_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_dbus_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_intent_client_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_intent_server_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_main_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_manager_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_monitor_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_package_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_plugininterfaces_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_qml.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_qml_application.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_qml_application_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_qml_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_qml_systemui.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_qml_systemui_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_shared_main_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_appman_window_private.pri:
 C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_concurrent.pri:
 C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_concurrent_private.pri:
 C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_core.pri:
@@ -408,10 +360,6 @@ C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri:
 C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri:
 C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri:
 C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quick.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quick3dphysics.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quick3dphysics_private.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quick3dphysicshelpers.pri:
-C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quick3dphysicshelpers_private.pri:
 C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quick_private.pri:
 C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quickcontrols2.pri:
 C:/Qt/6.8.2/mingw_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri:
