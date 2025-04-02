@@ -8,11 +8,11 @@ public:
     Graph(QCustomPlot *plot, const QString &xlabel, const QString &ylabel, int graphNumber=1);
 
     // void setData(int index, const QVector<double> &x, const QVector<double> &y);
-    void addPoint(int index, double x, double y);
+    void addPoint(int index, float x, float y);
     void setRandomData(int index);
     void setGraphColor(int index, const QColor &color);
     void setGraphName(int index, const QString &label);
-
+    QCustomPlot* getQCustomPlot();
 private:
     QCustomPlot *customPlot;
     QVector<QCPGraph *> graphs;

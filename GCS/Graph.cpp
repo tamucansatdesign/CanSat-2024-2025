@@ -22,7 +22,7 @@ Graph::Graph(QCustomPlot *plot, const QString& xlabel, const QString& ylabel, in
 
 }
 
-void Graph::addPoint(int index, double x, double y){
+void Graph::addPoint(int index, float x, float y){
     // QCPGraph *graph = graphs[index];
     xData[index].append(x);
     yData[index].append(y);
@@ -49,4 +49,10 @@ void Graph::setGraphColor(int index, const QColor& color){
 
 void Graph::setGraphName(int index, const QString& label){
     graphs[index]->setName(label);
+}
+
+
+
+QCustomPlot* Graph::getQCustomPlot(){
+    return customPlot;
 }
