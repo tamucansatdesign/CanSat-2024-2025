@@ -138,7 +138,8 @@ Cansat_GUI::~Cansat_GUI()
 {
     delete ui;
 }
-//Wasn't sure about updating this stuff, but I can do it too.
+
+
 
 
 

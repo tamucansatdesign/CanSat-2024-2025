@@ -79,16 +79,19 @@ void loop() {
       States::Ascent();
       break;
     case 2:
-      States::Descent();
+      States::StartDescent();
       break;
     case 3:
       States::PayloadRelease();
       break;    
-    case 5:
+    case 4:
       States::Landing();
       break;
+    case 5:
+      States::Recovery();
+      break;
     default:
-      States::Standby();
+      States::Ascent();
       break;
   }
   delay(Common::TELEMETRY_DELAY);

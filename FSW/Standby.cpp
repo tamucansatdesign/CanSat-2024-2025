@@ -8,7 +8,7 @@ namespace States
   
   void Standby()
   { 
-    States::processCommands(1,1,1,1,0);
+    Hardware::processCommands(1,1,1,1,0);
     Hardware::read_gps();
     Hardware::read_sensors();
 

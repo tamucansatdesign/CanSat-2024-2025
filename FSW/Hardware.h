@@ -13,7 +13,7 @@
 #include <Servo.h>
 #include <Encoder.h>
 #include <SD.h>
-
+#include <deque>
 
 // Covers initialization of sensors/radios, and any functions that utilize this hardware
 namespace Hardware
@@ -21,6 +21,10 @@ namespace Hardware
   extern bool SIM_ENABLE;                      // SIM ENABLE -> true ; SIM DISABLE -> false
   extern bool SIM_ACTIVATE;                    // SIM ENABLE and SIM ACTIVATE -> true ; SIM DISABLE -> false
   extern int SIM_PRESSURE;
+  extern float peak_altitude;
+  
+  extern unsigned long current_time;
+  extern unsigned long previous_time;
 
   extern bool CX;                              // CX on -> true ; CX off -> false
 
@@ -39,18 +43,30 @@ namespace Hardware
   extern Encoder enc;
   extern Adafruit_GPS gps;
   extern class Camera nosecone_cam;
-  extern class Camera gyro_cam;
-  extern Servo Leg1;
-  extern Servo Leg2;
-  extern Servo Leg3;
+  extern class Camera auto_gyro_cam;
+  extern Servo leg1;
+  extern Servo leg2;
+  extern Servo leg3;
   extern Servo reactionWheel; //change to DC motor later
 
 //add mutex's
-  extern Threads::Mutex gps_mutex;
-  extern Threads::Mutex write_mutex;
-  extern Threads::Mutex read_mutex;
-  extern Threads::Mutex loop_mutex;
-  
+  extern Threads::Mutex general_mtx; //shared resources: SIM_ACTIVATE, SIM_ENABLE, SIM_PRESSURE, CX, EE_BASE_PRESSURE, EE_PACKET_COUNT, lastCMD
+  //used in:
+    //read_sensors
+    //build_packet
+  extern Threads::Mutex gps_mtx; //gps, gps_data, GPS_SERIAL
+  //used in:
+    //read_gps
+    //processCommands
+    //build_packet
+  extern Threads::Mutex radio_mtx; //XBEE, GROUND_XBEE_SERIAL, telemetry
+  //used in:
+    //write_ground_radio
+    //read_ground_radio
+  extern Threads::Mutex sensor_mtx; //BMP388, BNO085, rotary encoder, enc, sensor_data
+  //used in:
+    //read_sensors
+    //build_packet
   extern Common::Sensor_Data sensor_data;
   extern Common::GPS_Data gps_data;
   
@@ -75,6 +91,12 @@ namespace Hardware
   void buzzer_on();
   void buzzer_off();
 
+  //Nichrome wire
+  //void nichrome_burn();
+
+  //Process Commands
+  void processCommands(const bool enableCX, const bool enableST, const bool enableSIM, const bool enableCAL, const bool enableMEC);
+  String build_packet(String state);
   // Camera operation
   class Camera 
   {

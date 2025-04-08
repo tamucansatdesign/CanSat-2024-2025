@@ -28,6 +28,8 @@ private slots:
                       QString gps_time, float gps_altitude, float gps_latitude,
                       float gps_longitude, int gps_sats, QString cmd_echo);
 
+    void on_connectSerial_clicked();
+
 private:
     Ui::Cansat_GUI *ui;
     Graph *graphWidgets[8];
