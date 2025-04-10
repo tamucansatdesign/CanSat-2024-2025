@@ -31,7 +31,7 @@ namespace Common
 
 
   const byte NOSECONE_CAMERA_PIN = 5;        // Camera 1 trigger pin
-  const byte GYRO_CAMERA_PIN = 6;  // Camera 2 trigger pin
+  const byte AUTO_GYRO_CAMERA_PIN = 6;  // Camera 2 trigger pin
   const byte ENCODER_PIN1=9, ENCODER_PIN2 = 10; //encoder pins
   const byte AUDIO_BEACON_PIN = 8;  // Audio buzzer signal pin
 
@@ -40,7 +40,7 @@ namespace Common
   const uint16_t PC_ADDR = 4;  // packet count                                      ; address space: 4-6 (uint16_t = 2 bytes)
   const uint16_t ST_ADDR = 6;  // states                                            ; address space: 6-8 (uint16_t = 2 bytes)
   
-  
+  const int CANSAT_RADIUS = .1;
 
   struct Sensor_Data
   {
@@ -51,6 +51,7 @@ namespace Common
     float gyro_r; // BNO 085: tilt in X (roll)
     float gyro_p; // BNO 085: rotation speed around Y
     float gyro_y; // BNO 085: rotation speed around Z
+    float accel_linear_z; // BNO 085: linear acceleration in Z (up/down)
     float accel_r; // BNO 085: accel in X (roll)
     float accel_p; // BNO 085: accel in Y (pitch)
     float accel_y; // BNO 085: accel in Z (yaw)

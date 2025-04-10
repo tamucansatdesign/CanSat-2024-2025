@@ -5,8 +5,13 @@ namespace Hardware
   bool SIM_ACTIVATE = false;  
   bool SIM_ENABLE = false;
   int SIM_PRESSURE = 0;
+  float peak_altitude = 0;
 
   bool CX = false;
+
+  unsigned long current_time = 0;
+  unsigned long previous_time = 0;
+
 
   float EE_BASE_PRESSURE = -1;
   uint16_t EE_PACKET_COUNT = 0;
@@ -15,19 +20,19 @@ namespace Hardware
 
   Adafruit_BMP3XX bmp;
   Adafruit_BNO08x bno;
-  Encoder enc;
+  Encoder enc(Common::ENCODER_PIN1, Common::ENCODER_PIN2);
   Adafruit_GPS gps(&GPS_SERIAL);
   
   Camera nosecone_cam(Common::NOSECONE_CAMERA_PIN);
-  Camera north_cam(Common::NORTH_CAMERA_PIN);
-  Servo landing_leg_1;
-  Servo landing_leg_2;
-  Servo landing_leg_3;
+  Camera auto_gyro_cam(Common::AUTO_GYRO_CAMERA_PIN);
+  Servo leg1;
+  Servo leg2;
+  Servo leg3;
   Servo camera_servo;
-  Threads::Mutex gps_mutex;
-  Threads::Mutex write_mutex;
-  Threads::Mutex read_mutex;
-  Threads::Mutex loop_mutex;
+  Threads::Mutex gps_mtx;
+  Threads::Mutex radio_mtx;
+  Threads::Mutex sensor_mtx;
+  Threads::Mutex general_mtx;
   Common::Sensor_Data sensor_data;
   Common::GPS_Data gps_data;
   
@@ -48,13 +53,13 @@ namespace Hardware
     Serial.println("Found I2C connections successfully.");
 
     // Connect servo pins
-    landing_leg_1.attach(Common::LANDING_LEG_1_PIN);
-    landing_leg_2.attach(Common::LANDING_LEG_2_PIN);
-    landing_leg_3.attach(Common::LANDING_LEG_3_PIN);
+    leg1.attach(Common::LANDING_LEG_1_PIN);
+    leg2.attach(Common::LANDING_LEG_2_PIN);
+    leg3.attach(Common::LANDING_LEG_3_PIN);
     camera_servo.attach(Common::CAMERA_SERVO_PIN);
   
 
-
+    current_time = millis();
       
     
     // SD card initialization
@@ -107,8 +112,10 @@ namespace Hardware
 
     // Attempt to setup desired bno reports
     Serial.println("Setting BNO085 desired reports...");
-    if (!bno.enableReport(SH2_ARVR_STABILIZED_RV, 5000)) {
-      Serial.println("Could not enable stabilized rotation vector report");
+    if (!bno.enableReport(SH2_LINEAR_ACCELERATION, 5000) 
+    || !bno.enableReport(SH2_GRYOSCOPE_CALIBRATED, 5000) 
+    || !bno.enableReport(SH2_MAGNETIC_FIELD_CALIBRATED, 5000)) {
+      Serial.println("Could not enable sensor reports");
     }
     else {
       Serial.println("Set BNO085 desired reports successfully.");
@@ -119,6 +126,10 @@ namespace Hardware
 
   void read_sensors()   // read data from Teensy, BMP, BNO, and rotary encoder sensors
   {  
+    previous_time = current_time;
+    
+
+
     // read Teensy: vbat (voltage)
     sensor_data.vbat = ((analogRead(Common::VOLTAGE_PIN) / 1023.0) * 4.2) + 0.35;
 
@@ -142,39 +153,30 @@ namespace Hardware
       }
     }
 
-    // TODO: read BNO: tilt, rotation_speed
+    // TODO: read BNO: mag, accel, gyro
     sh2_SensorValue_t sensorValue;
     if (bno.getSensorEvent(&sensorValue)) 
     {
       switch (sensorValue.sensorId)
       {
-        case SH2_ARVR_STABILIZED_RV:
-          // Extract quaternion components
-          float qr = sensorValue.un.arvrStabilizedRV.real;
-          float qi = sensorValue.un.arvrStabilizedRV.i;
-          float qj = sensorValue.un.arvrStabilizedRV.j;
-          float qk = sensorValue.un.arvrStabilizedRV.k;
+        case SH2_LINEAR_ACCELERATION:
+          sensor_data.accel_linear_z = sensorValue.un.accel.z;
 
-          // Convert quaternion to Euler angles
-          float sqr = sq(qr);
-          float sqi = sq(qi);
-          float sqj = sq(qj);
-          float sqk = sq(qk);
+        break;
 
-          // float yaw = atan2(2.0 * (qi * qj + qk * qr), (sqi - sqj - sqk + sqr)) * RAD_TO_DEG;
-          float pitch = asin(-2.0 * (qi * qk - qj * qr) / (sqi + sqj + sqk + sqr)) * RAD_TO_DEG;
-          float roll = atan2(2.0 * (qj * qk + qi * qr), (-sqi - sqj + sqk + sqr)) * RAD_TO_DEG;
+        case SH2_MAGNETIC_FIELD_CALIBRATED:
+          sensor_data.mag_r = sensorValue.un.magnetic.x;
+          sensor_data.mag_p = sensorValue.un.magnetic.y;
+          sensor_data.mag_y = sensorValue.un.magnetic.z;
+        break;
 
-          // Calculate TILT_X and TILT_Y (angles of X and Y axes with respect to Z axis)
-          sensor_data.tilt_y = pitch;   // TILT_Y is pitch
-          sensor_data.tilt_x = roll;  // TILT_X is roll
+        case SH2_GYROSCOPE_CALIBRATED:
+          sensor_data.gyro_r = sensorValue.un.gyroscope.x;
+          sensor_data.gyro_p = sensorValue.un.gyroscope.y;
+          sensor_data.gyro_y = sensorValue.un.gyroscope.z;
+        break;
 
-          // Calculate ROT_Z (rotation rate around Z axis)
-          sensor_data.rotation_z = sensorValue.un.gyroscope.z * RAD_TO_DEG; // Convert from radians/sec to degrees/sec
-          break;
       }
-
-
     }
 
     // read rotary encoder
@@ -184,12 +186,11 @@ namespace Hardware
     if(newPosition != oldPosition) {
       int stepsPerRevolution = 24;
       int rotations = newPosition / stepsPerRevolution;
-      int rotation_speed = rotations * 1000 / (millis() - gps_data.milliseconds);
+      int rotation_speed = rotations * 1000 / (current_time - previous_time); // Calculate rotation speed in RPM
       sensor_data.auto_gyro_speed = rotation_speed;
       oldPosition = newPosition;
     }
-
-    
+    current_time = millis();
   }
 
   // Ultimate GPS Breakout operation
@@ -229,8 +230,7 @@ namespace Hardware
 
   void read_gps_loop()
   {
-    gps_mutex.lock();
-    char c = gps.read();
+    gps_mtx.lock();
     if(gps.newNMEAreceived())
     {
       if(gps.parse(gps.lastNMEA()))
@@ -249,7 +249,7 @@ namespace Hardware
       gps_data.sats = (byte)(unsigned int)gps.satellites;  // We do this double conversion to avoid signing issues
       }
     }
-    gps_mutex.unlock();
+    gps_mtx.unlock();
   }
 
   void setup_RE()
@@ -293,11 +293,15 @@ namespace Hardware
 
   void write_ground_radio(const String &data) 
   {
+    // write_mutex.lock();
     GROUND_XBEE_SERIAL.println(data);
-    
-    telemetry = SD.open("Flight_2054.csv", FILE_WRITE);
+    // write_mutex.unlock();
+
+    telemetry = SD.open("Flight_3181.csv", FILE_WRITE);
     telemetry.println(data);
     telemetry.close();
+
+    
   }
 
   bool read_ground_radio(String &data)
@@ -393,7 +397,7 @@ namespace Hardware
       }
   }
   // helper functions
-  static void processCommands(const bool enableCX, const bool enableST, const bool enableSIM, const bool enableCAL, const bool enableMEC)
+  void processCommands(const bool enableCX, const bool enableST, const bool enableSIM, const bool enableCAL, const bool enableMEC)
   {
     String received;
     if (Hardware::read_ground_radio(received)) 
@@ -439,7 +443,7 @@ namespace Hardware
             int minute = utc.substring(3, 5).toInt();
             int seconds = utc.substring(6, 8).toInt();
 
-            setTime(hour, minute, seconds, Hardware::gps_data.day, Hardware::gps_data.month, Hardware::gps_data.year);
+            setTime(hour, minute, seconds, day(), month(), year());
           }
         }
 
@@ -487,9 +491,9 @@ namespace Hardware
           }
           else if(cmd.startsWith("MECLLOPEN"))
           {
-            Hardware::landing_leg_1.write(180);
-            Hardware::landing_leg_2.write(180);
-            Hardware::landing_leg_3.write(180);
+            Hardware::leg1.write(180);
+            Hardware::leg2.write(180);
+            Hardware::leg3.write(180);
           }
         }
       
@@ -497,7 +501,7 @@ namespace Hardware
     }
   }
 
-  static String build_packet(String state)
+  String build_packet(String state)
   {
     // <TEAM_ID>, <MISSION_TIME>, <PACKET_COUNT>, <MODE>, <STATE>, <ALTITUDE>,
     // <AIR_SPEED>, <HS_DEPLOYED>, <PC_DEPLOYED>, <TEMPERATURE>, <VOLTAGE>,

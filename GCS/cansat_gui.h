@@ -31,6 +31,7 @@ private slots:
                       QString gps_time, float gps_altitude, float gps_latitude,
                       float gps_longitude, int gps_sats, QString cmd_echo);
 
+<<<<<<< HEAD
     void on_Calibrate_clicked();
 
     void on_Connect_clicked();
@@ -46,6 +47,9 @@ private slots:
     void on_Set_Time_clicked();
 
     void on_Simulate_clicked();
+=======
+    void on_connectSerial_clicked();
+>>>>>>> 802247bdd8bf4697290deaeb424781e6dffe343d
 
 private:
     Ui::Cansat_GUI *ui;

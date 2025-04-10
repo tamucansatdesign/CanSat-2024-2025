@@ -7,7 +7,7 @@ namespace States
 {
   extern uint16_t EE_STATE;
   extern bool landing_legs_deployed;
-
+  
   // ordered by state diagram (2024-2025: State diagram was unofficially revised)
   // void setup() : Bootup -> EE_STATE = 0
     // Initialize hardware
@@ -23,7 +23,7 @@ namespace States
       // Kalman Filter
       // Start recording of nosecone camera
       // Start Reaction Wheel Control system
-  void StartDescent();    
+  void StartDescent();    // StartDescent -> EE_STATE = 3
   
   //Transmit
   // Kalman Filter
@@ -37,12 +37,12 @@ namespace States
       // Deploy parachute
       // Move landing legs to landing deployment
   void Landing();         // Landing -> EE_STATE = 5
+
     // Cease telemetry
     // Stop both camera recordings
     // Activate audio beacon
-    
-  void Recovery();
-
+  void Recovery();       // Recovery -> EE_STATE = 6
+  
 
 };
 

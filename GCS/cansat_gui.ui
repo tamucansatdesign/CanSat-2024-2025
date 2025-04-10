@@ -94,7 +94,11 @@
      </rect>
     </property>
    </widget>
+<<<<<<< HEAD
    <widget class="QPushButton" name="Connect">
+=======
+   <widget class="QPushButton" name="connectSerial">
+>>>>>>> 802247bdd8bf4697290deaeb424781e6dffe343d
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -342,7 +346,7 @@
      <x>0</x>
      <y>0</y>
      <width>1361</width>
-     <height>25</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu2025_CanSat_GUI">
@@ -369,7 +373,11 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+<<<<<<< HEAD
   <tabstop>Connect</tabstop>
+=======
+  <tabstop>connectSerial</tabstop>
+>>>>>>> 802247bdd8bf4697290deaeb424781e6dffe343d
   <tabstop>lineEdit</tabstop>
   <tabstop>Simulate</tabstop>
   <tabstop>plainTextEdit</tabstop>
