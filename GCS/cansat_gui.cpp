@@ -1,5 +1,7 @@
 #include "cansat_gui.h"
 #include "ui_cansat_gui.h"
+#include <QSerialPort>
+#include <QSerialPortInfo>
 
 Cansat_GUI::Cansat_GUI(QWidget *parent) : QMainWindow(parent), ui(new Ui::Cansat_GUI), parser(new FrameParser(this))
 {
@@ -141,4 +143,146 @@ Cansat_GUI::~Cansat_GUI()
 //Wasn't sure about updating this stuff, but I can do it too.
 
 
+serial = new QSerialPort(this);
+connect(serial, &QSerialPort::readyRead, this, &Cansat_GUI::readSerialData);
+
+void Cansat_GUI::on_Calibrate_clicked()
+{
+    if (serial && serial->isOpen()) {
+        QByteArray calibrateCommand = "CALIBRATE\n";  // Replace with actual command your system expects
+        serial->write(calibrateCommand);
+        qDebug() << "Calibration command sent.";
+    } else {
+        qDebug() << "Serial port not open!";
+    }
+}
+
+
+void Cansat_GUI::on_Connect_clicked()
+{
+    qDebug() << "Connect button clicked";
+
+    if (serial->isOpen()) {
+        serial->close();
+        qDebug() << "Disconnected from serial port.";
+        return;
+    }
+
+    // Configure serial port (update with correct values if needed)
+    serial->setPortName("COM3"); // TODO: replace with dynamic selection if needed
+    serial->setBaudRate(QSerialPort::Baud9600);
+    serial->setDataBits(QSerialPort::Data8);
+    serial->setParity(QSerialPort::NoParity);
+    serial->setStopBits(QSerialPort::OneStop);
+    serial->setFlowControl(QSerialPort::NoFlowControl);
+
+    if (serial->open(QIODevice::ReadWrite)) {
+        qDebug() << "Serial port opened successfully!";
+    } else {
+        qDebug() << "Failed to open serial port:" << serial->errorString();
+    }
+}
+
+void Cansat_GUI::readSerialData()
+{
+    QByteArray data = serial->readAll();
+    qDebug() << "Received data:" << data;
+
+    // Optional: send data to parser
+    parser->parseFrame(data);
+    savedTelemetryData.append(QString::fromUtf8(data));  // In readSerialData()
+}
+
+void Cansat_GUI::on_Cx_on_clicked()
+{
+    if (serial && serial->isOpen()) {
+        QByteArray command = "CXON\n";  // Replace with actual command
+        serial->write(command);
+        qDebug() << "CXON command sent.";
+    } else {
+        qDebug() << "Serial port not open!";
+    }
+}
+
+
+void Cansat_GUI::on_Load_Data_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, "Open Telemetry File", "", "Text Files (*.txt *.csv)");
+    if (fileName.isEmpty())
+        return;
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Failed to open file!";
+        return;
+    }
+
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        parser->parseFrame(line.toUtf8());
+    }
+
+    qDebug() << "Data loaded from file:" << fileName;
+}
+
+void Cansat_GUI::on_Mechanism_clicked()
+{
+    if (serial && serial->isOpen()) {
+        QByteArray command = "MECHANISM\n";  // Replace with real trigger
+        serial->write(command);
+        qDebug() << "Mechanism command sent.";
+    } else {
+        qDebug() << "Serial port not open!";
+    }
+}
+
+
+QStringList savedTelemetryData;
+void Cansat_GUI::on_Save_Data_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, "Save Telemetry", "", "Text Files (*.txt *.csv)");
+    if (fileName.isEmpty())
+        return;
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "Failed to open file for writing!";
+        return;
+    }
+
+    QTextStream out(&file);
+    for (const QString &line : savedTelemetryData)
+        out << line << '\n';
+
+    qDebug() << "Telemetry data saved to:" << fileName;
+}
+
+
+void Cansat_GUI::on_Set_Time_clicked()
+{
+    if (serial && serial->isOpen()) {
+        QString timeCommand = QString("TIME:%1\n").arg(QDateTime::currentDateTime().toString("hh:mm:ss"));
+        serial->write(timeCommand.toUtf8());
+        qDebug() << "Time sync command sent:" << timeCommand;
+    } else {
+        qDebug() << "Serial port not open!";
+    }
+}
+
+
+void Cansat_GUI::on_Simulate_clicked()
+{
+    qDebug() << "Simulate button clicked";
+
+    // Simulate one full packet and feed to parser
+    QString fakeData = "ID:1,TIME:12:00:00,ALT:123.4,TEMP:22.5,PRES:101.3,VOLT:3.7,"
+                       "GYRO_R:0.1,GYRO_P:0.2,GYRO_Y:0.3,"
+                       "ACC_R:0.1,ACC_P:0.2,ACC_Y:0.3,"
+                       "MAG_R:0.4,MAG_P:0.5,MAG_Y:0.6,"
+                       "AGR:0.7,GPS_TIME:12:00:00,GPS_ALT:124.5,GPS_LAT:39.1234,"
+                       "GPS_LONG:-76.5432,GPS_SATS:8,CMD_ECHO:OK\n";
+
+    parser->parseFrame(fakeData.toUtf8());
+}
 

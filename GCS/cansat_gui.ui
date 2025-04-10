@@ -94,7 +94,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="Connect">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -107,7 +107,7 @@
      <string>Connect</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="Simulate">
     <property name="geometry">
      <rect>
       <x>360</x>
@@ -166,7 +166,7 @@
      <string>Load CSV:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="Save_Data">
     <property name="geometry">
      <rect>
       <x>1220</x>
@@ -179,7 +179,7 @@
      <string>Save Data</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="Load_Data">
     <property name="geometry">
      <rect>
       <x>1290</x>
@@ -192,7 +192,7 @@
      <string>Load Data</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="Calibrate">
     <property name="geometry">
      <rect>
       <x>440</x>
@@ -205,7 +205,7 @@
      <string>CAL</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QPushButton" name="Mechanism">
     <property name="geometry">
      <rect>
       <x>520</x>
@@ -218,7 +218,7 @@
      <string>MEC</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_7">
+   <widget class="QPushButton" name="Cx_on">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -231,7 +231,7 @@
      <string>CX ON</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_8">
+   <widget class="QPushButton" name="Set_Time">
     <property name="geometry">
      <rect>
       <x>610</x>
@@ -369,17 +369,17 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>pushButton</tabstop>
+  <tabstop>Connect</tabstop>
   <tabstop>lineEdit</tabstop>
-  <tabstop>pushButton_2</tabstop>
+  <tabstop>Simulate</tabstop>
   <tabstop>plainTextEdit</tabstop>
   <tabstop>lineEdit_2</tabstop>
-  <tabstop>pushButton_3</tabstop>
-  <tabstop>pushButton_4</tabstop>
-  <tabstop>pushButton_5</tabstop>
-  <tabstop>pushButton_6</tabstop>
-  <tabstop>pushButton_7</tabstop>
-  <tabstop>pushButton_8</tabstop>
+  <tabstop>Save_Data</tabstop>
+  <tabstop>Load_Data</tabstop>
+  <tabstop>Calibrate</tabstop>
+  <tabstop>Mechanism</tabstop>
+  <tabstop>Cx_on</tabstop>
+  <tabstop>Set_Time</tabstop>
  </tabstops>
  <resources/>
  <connections/>
