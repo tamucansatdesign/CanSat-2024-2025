@@ -208,7 +208,7 @@ namespace Hardware
     else {
       Serial.println("Found GPS successfully.");
     }
-
+    delay(1000);
     gps.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ); // 1 Hz update rate
     // gps.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
     // GPS.sendCommand(PGCMD_ANTENNA);
