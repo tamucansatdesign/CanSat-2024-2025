@@ -40,13 +40,13 @@ void KalmanFilter::update(float baroAlt, float gpsAlt, float accelAcc, float dt)
     z = {baroAlt, gpsAlt}; // Measurement vector (barometric and GPS altitudes)
 
     BLA::Matrix<2, 2> S = H * P * ~H + R;
-    K = P * ~H * S.Inverse(); // Kalman gain matrix
+    K = P * ~H * Inverse(S); // Kalman gain matrix
 
     
 
     x = x + K * (z - H * x);
 
-    Matrix<2, 2> I = {1.0f, 0.0f,
+    BLA::Matrix<2, 2> I = {1.0f, 0.0f,
                       0.0f, 1.0f}; // Identity matrix (2x2)
                       
 
@@ -57,7 +57,7 @@ void KalmanFilter::update(float baroAlt, float gpsAlt, float accelAcc, float dt)
 
 void KalmanFilter::predict(float accelAcc, float dt){
     // Update the state transition matrix A based on the time step dt
-    A = {1.0f, dt
+    A = {1.0f, dt,
         0.0f, 1.0f}; // State transition matrix (2x2)
     
     // Update the control input matrix B based on the acceleration
@@ -69,3 +69,14 @@ void KalmanFilter::predict(float accelAcc, float dt){
     P = A * P * ~A + Q;
 }
 
+
+
+
+float KalmanFilter::getAltitude() const{
+    return x(0);
+}
+
+
+float KalmanFilter::getVelocity() const{
+    return x(1);
+}

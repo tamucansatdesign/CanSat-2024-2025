@@ -3,7 +3,7 @@
 #define __HARDWARE_H__
 
 #include "Common.h"
-
+#include "KalmanFilter.h"
 #include <Wire.h>             // I2C protocol
 #include <Adafruit_BMP3XX.h>  // BMP388 
 #include <Adafruit_BNO08x.h>  // BNO085 
@@ -48,6 +48,7 @@ namespace Hardware
   extern Servo leg2;
   extern Servo leg3;
   extern Servo reactionWheel; //change to DC motor later
+  extern KalmanFilter kf;
 
 //add mutex's
   extern Threads::Mutex general_mtx; //shared resources: SIM_ACTIVATE, SIM_ENABLE, SIM_PRESSURE, CX, EE_BASE_PRESSURE, EE_PACKET_COUNT, lastCMD
@@ -81,6 +82,7 @@ namespace Hardware
   // Ultimate GPS Breakout operation
   void setup_GPS();
   void read_gps();
+  // void read_gps_loop();
     
   // XBee Pro S2C operation
   void setup_XBee();

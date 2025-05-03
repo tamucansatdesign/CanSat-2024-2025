@@ -6,13 +6,12 @@ namespace States
   void Ascent()
   {
 
-    static float old_velocity = 0.0f;
     Hardware::processCommands(1,1,1,1,1);
     Hardware::read_gps();
     Hardware::read_sensors();
-    float velocity = ;
+    
     // State -> altitude >> 2m
-    if (Hardware::sensor_data.altitude > 5 && velocity < 0 && Hardware::sensor_data.accel_linear_z < 0) {
+    if (Hardware::sensor_data.altitude > 5 && Hardware::kf.getVelocity() < 0 && Hardware::sensor_data.accel_linear_z < 0) { //TODO: Make sure acceleration is straight down
       EE_STATE = 2;
       // TODO: EEPROM.put(Common::ST_ADDR, EE_STATE);
     }
@@ -30,6 +29,5 @@ namespace States
     }
 
 
-    old_velocity = velocity;
   }
 }

@@ -36,6 +36,7 @@ namespace Hardware
   Common::Sensor_Data sensor_data;
   Common::GPS_Data gps_data;
   
+  KalmanFilter kf;
   // Core function of the Boot-up states. 
   // Performs set up for all sensors and other components, and does anything
   // that needs to be done before Standby state can be entered.
@@ -113,7 +114,7 @@ namespace Hardware
     // Attempt to setup desired bno reports
     Serial.println("Setting BNO085 desired reports...");
     if (!bno.enableReport(SH2_LINEAR_ACCELERATION, 5000) 
-    || !bno.enableReport(SH2_GRYOSCOPE_CALIBRATED, 5000) 
+    || !bno.enableReport(SH2_GYROSCOPE_CALIBRATED, 5000) 
     || !bno.enableReport(SH2_MAGNETIC_FIELD_CALIBRATED, 5000)) {
       Serial.println("Could not enable sensor reports");
     }
@@ -160,14 +161,14 @@ namespace Hardware
       switch (sensorValue.sensorId)
       {
         case SH2_LINEAR_ACCELERATION:
-          sensor_data.accel_linear_z = sensorValue.un.accel.z;
+          sensor_data.accel_linear_z = sensorValue.un.accelerometer.z;
 
         break;
 
         case SH2_MAGNETIC_FIELD_CALIBRATED:
-          sensor_data.mag_r = sensorValue.un.magnetic.x;
-          sensor_data.mag_p = sensorValue.un.magnetic.y;
-          sensor_data.mag_y = sensorValue.un.magnetic.z;
+          sensor_data.mag_r = sensorValue.un.magneticField.x;
+          sensor_data.mag_p = sensorValue.un.magneticField.y;
+          sensor_data.mag_y = sensorValue.un.magneticField.z;
         break;
 
         case SH2_GYROSCOPE_CALIBRATED:
@@ -227,30 +228,55 @@ namespace Hardware
     //   delay(5000);
     // }
   }
-
-  void read_gps_loop()
+  void read_gps()
   {
-    gps_mtx.lock();
-    if(gps.newNMEAreceived())
+    bool newData = false;
+
+    while (!gps.newNMEAreceived())
     {
-      if(gps.parse(gps.lastNMEA()))
-      {
+      char c = gps.read();
+    }
+    newData = gps.parse(gps.lastNMEA());
+
+    if (newData)
+    {
       //Serial.println(String(gps.hour) + ":" + String(gps.minute) + ":" + String(gps.seconds) + "." + String(gps.milliseconds));
       setTime(gps.hour, gps.minute, gps.seconds, gps.day, gps.month, gps.year);
+    }
+
+    gps_data.hours = gps.hour;
+    gps_data.minutes = gps.minute;
+    gps_data.seconds = gps.seconds;
+    gps_data.milliseconds = gps.milliseconds;
+    gps_data.latitude = gps.latitude;
+    gps_data.longitude = gps.longitude;
+    gps_data.altitude = gps.altitude;
+    gps_data.sats = (byte)(unsigned int)gps.satellites;  // We do this double conversion to avoid signing issues
+  }
+
+  // void read_gps_loop()
+  // {
+  //   gps_mtx.lock();
+  //   if(gps.newNMEAreceived())
+  //   {
+  //     if(gps.parse(gps.lastNMEA()))
+  //     {
+  //     //Serial.println(String(gps.hour) + ":" + String(gps.minute) + ":" + String(gps.seconds) + "." + String(gps.milliseconds));
+  //     setTime(gps.hour, gps.minute, gps.seconds, gps.day, gps.month, gps.year);
     
 
-      gps_data.hours = gps.hour;
-      gps_data.minutes = gps.minute;
-      gps_data.seconds = gps.seconds;
-      gps_data.milliseconds = gps.milliseconds;
-      gps_data.latitude = gps.latitude;
-      gps_data.longitude = gps.longitude;
-      gps_data.altitude = gps.altitude;
-      gps_data.sats = (byte)(unsigned int)gps.satellites;  // We do this double conversion to avoid signing issues
-      }
-    }
-    gps_mtx.unlock();
-  }
+  //     gps_data.hours = gps.hour;
+  //     gps_data.minutes = gps.minute;
+  //     gps_data.seconds = gps.seconds;
+  //     gps_data.milliseconds = gps.milliseconds;
+  //     gps_data.latitude = gps.latitude;
+  //     gps_data.longitude = gps.longitude;
+  //     gps_data.altitude = gps.altitude;
+  //     gps_data.sats = (byte)(unsigned int)gps.satellites;  // We do this double conversion to avoid signing issues
+  //     }
+  //   }
+  //   gps_mtx.unlock();
+  // }
 
   void setup_RE()
   {
